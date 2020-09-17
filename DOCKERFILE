@@ -1,6 +1,14 @@
 FROM nginx:alpine
+EXPOSE 22
 
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=builder . /usr/share/nginx/html 
+RUN apk add --no-cache openssh \
+  && apk add --no-cache nmap \
+  && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
+  && echo "root:root" | chpasswd 
+  
+COPY ssh_entrypoint.sh /
 
-#ENTRYPOINT ["nginx", "-g", "daemon off;"]
+RUN rm /usr/share/nginx/html/*
+COPY ./html /usr/share/nginx/html 
+
+# ENTRYPOINT ["nginx", "-g", "daemon off;"] 
