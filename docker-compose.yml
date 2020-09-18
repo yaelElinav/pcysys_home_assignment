@@ -1,12 +1,10 @@
 version: '3.2'
 services:
-    web:
-        build: .
-        ports:
-        - "80:8080"
-        volumes:
-        - /mnt/logs:/var/log/nginx
-      ssh:
-        build: .
-        ports:
-        - "22:2222"
+  nginx_openssh_nmap:
+    build: .
+    ports:
+    - "8080:80"
+    - "2222:22"
+    #volumes:
+    #- /mnt/logs:/var/log/nginx
+
