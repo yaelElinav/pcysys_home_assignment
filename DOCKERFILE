@@ -5,8 +5,7 @@ RUN apk add --no-cache openssh \
   && apk add --no-cache nmap \
   && sed -i s/#PermitRootLogin.*/PermitRootLogin\ yes/ /etc/ssh/sshd_config \
   && echo "root:root" | chpasswd 
-  
-COPY ssh_entrypoint.sh /
+COPY ssh_entrypoint.sh /docker-entrypoint.d/
 
 RUN rm /usr/share/nginx/html/*
 COPY ./html /usr/share/nginx/html 
